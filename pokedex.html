@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .entry{
+        width: 25%;
+        /*height: 30em;*/
+        float:left;
+    }
+    .rounded{
+        border-radius: 15px;
+    }
+    .type{
+        float:left;
+        width: 4em;
+    }
+    img{
+        width: 100%;
+        height: 15em;
+    }
+
+</style>
+<body>
+    <div id="container">
+
+    </div>
+</body>
+</html>
+<script>
+    // for(let i = 0; i < 100; i++){
+    //     const entry = document.createElement("div");
+    //     entry.className = "entry card-panel teal lighten-2";
+    //     entry.innerHTML = "Example " + i;
+    //     document.getElementById("container").appendChild(entry);
+    // }
+    let pokemon;
+
+    window.onload =function () {
+        fetch("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json")
+            .then(response => response.json())
+            // .then(response => JSON.parse(response))
+            // .then(response => response.pokemon.forEach(entry =>addEntry(entry)));
+            .then(response => {
+                pokemon = response.pokemon;
+                arrayLoaded();
+            });
+    }
+    function arrayLoaded(){
+        pokemon.forEach(entry => addEntry(entry));
+    }
+
+    function addEntry(entry){
+        const container = document.getElementById("container");
+        const entryElement = document.createElement("div");
+        entryElement.className = "entry card-panel teal lighten-3";
+
+        const entryImg = document.createElement("img");
+        entryImg.src= entry.img;
+        entryElement.appendChild(entryImg);
+
+        const entryId = document.createElement("div");
+        entryId.innerHTML = "#" + entry.id
+        entryElement.id = "entry-"+entry.id;
+        entryElement.appendChild(entryId);
+
+        const entryName = document.createElement("div");
+        entryName.className= "white rounded";
+        entryName.innerHTML=entry.name;
+        entryElement.appendChild(entryName);
+
+        const entryTypes = document.createElement("div");
+        entry.type.forEach(type=>{
+            const entryType = document.createElement("div");
+            entryType.innerHTML=type;
+            switch(type){
+                case "Normal":{
+                    entryType.className="type grey white-text rounded";
+                    break;
+                }
+                case "Fire":{
+                    entryType.className="type orange white-text rounded";
+                    break;
+                }
+                case "Water":{
+                    entryType.className="type blue white-text rounded";
+                    break;
+                }case "Grass":{
+                    entryType.className="type green lighten-1 white-text rounded";
+                    break;
+                }case "Electric":{
+                    entryType.className="type yellow white-text rounded";
+                    break;
+                }case "Ice":{
+                    entryType.className="type blue lighten-3 white-text rounded";
+                    break;
+                }case "Fighting":{
+                    entryType.className="type red darken-2 white-text rounded";
+                    break;
+                }case "Poison":{
+                    entryType.className="type purple white-text rounded";
+                    break;
+                }case "Ground":{
+                    entryType.className="type brown lighten-3 white-text rounded";
+                    break;
+                }case "Flying":{
+                    entryType.className="type blue lighten-2 white-text rounded";
+                    break;
+                }case "Psychic":{
+                    entryType.className="type pink white-text rounded";
+                    break;
+                }case "Bug":{
+                    entryType.className="type green white-text rounded";
+                    break;
+                }case "Rock":{
+                    entryType.className="type brown lighten-2 white-text rounded";
+                    break;
+                }case "Ghost":{
+                    entryType.className="type purple darken-2 white-text rounded";
+                    break;
+                }case "Dark":{
+                    entryType.className="type brown darken-3 white-text rounded";
+                    break;
+                }case "Dragon":{
+                    entryType.className="type blue darken-2 white-text rounded";
+                    break;
+                }case "Steel":{
+                    entryType.className="type grey lighten-2 white-text rounded";
+                    break;
+                }case "Fairy":{
+                    entryType.className="type pink lighten-2 white-text rounded";
+                    break;
+                }
+
+            }
+            entryTypes.appendChild(entryType)
+        })
+        entryElement.appendChild(entryTypes);
+
+        container.appendChild(entryElement);
+
+    }
+
+</script>
